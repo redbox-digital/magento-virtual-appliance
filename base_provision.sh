@@ -6,12 +6,13 @@ wget http://people.centos.org/tru/devtools-1.1/devtools-1.1.repo -O /etc/yum.rep
 yum install -y devtoolset-1.1
 ln -s /opt/centos/devtoolset-1.1/root/usr/bin/* /usr/bin/
 
-# Add EPEL
+# Add webtatic (more recent PHP)
 # We use -U to update rather than install, so that this script can be
 # run multiple times without incident.
-rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
-# Add webtatic (more recent PHP)
 rpm -Uvh http://mirror.webtatic.com/yum/el6/latest.rpm
+
+# Ensure everything is up to date
+yum update -y
 
 # PHP, and necessary extensions
 yum install -y php54w
@@ -64,7 +65,8 @@ curl -o n98-magerun.phar https://raw.githubusercontent.com/netz98/n98-magerun/ma
 chmod +x n98-magerun.phar
 
 # Fabric
-yum install -y python python-devel python-pip
+yum install -y python python-devel
+python /tmp/server-config/get-pip.py
 pip install fabric
 
 cp /tmp/server-config/home/vagrant/fabfile.py /home/vagrant/fabfile.py
@@ -78,3 +80,7 @@ chown vagrant:vagrant /home/vagrant/.ssh/known_hosts
 mkdir -p /var/www/magento
 chown -R vagrant:vagrant /var/www/magento
 
+# Autostart the server
+# chkconfig nginx on
+# chkconfig php-fpm on
+# chkconfig mysql on
