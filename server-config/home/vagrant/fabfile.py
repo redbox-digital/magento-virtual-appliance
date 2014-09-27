@@ -44,7 +44,7 @@ def git_clone():
 def install():
     """Run the install command and install sample data."""
     with lcd(magento_root):
-        local('n98-magerun.phar install --installationFolder . --installSampleData --noDownload --dbHost="localhost" --dbUser="root" --dbPass="" --dbName="mage_local" --dbPort="3306" --admin-password="pass1234" --no-interaction --baseUrl="%s" % config.get('base_url', 'http://magento.local/')')
+        local('n98-magerun.phar install --installationFolder . --installSampleData --noDownload --dbHost="localhost" --dbUser="root" --dbPass="" --dbName="mage_local" --dbPort="3306" --admin-password="pass1234" --no-interaction --baseUrl="%s"' % config.get('base_url', 'http://magento.local/')')
 
 @task
 def get_local_xml():
