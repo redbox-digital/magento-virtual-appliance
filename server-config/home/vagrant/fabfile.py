@@ -9,18 +9,19 @@ project_root = '/var/www/magento'
 magento_root = os.path.join(project_root, 'htdocs')
 config = json.load(open(os.path.join(project_root, 'config.json')))
 
-env.hosts = [config['ssh_host']]
-env.port = config['ssh_port']
-env.user = config['ssh_username']
+env.hosts = [config.get('ssh_host')] if config.get('ssh_host') else []
+env.port = config.get('ssh_port')
+env.user = config.get('ssh_username')
 
 # Set up SSH for password or certificate based authentication
-env.password = config['ssh_password'] or None
-if config['ssh_certificate']:
+env.password = config.get('ssh_password')
+if config.get('ssh_certificate'):
     env.key_filename = os.path.join('/vagrant', config['ssh_certificate'])
 else:
     env.key_filename = None
 
 def random_filename(extension):
+    """A random filename (with optional extension)"""
     extension = '.' + extension if extension else ''
     return hashlib.md5(os.urandom(64)).hexdigest() + extension
 
@@ -43,7 +44,7 @@ def git_clone():
 def install():
     """Run the install command and install sample data."""
     with lcd(magento_root):
-        local('n98-magerun install --installationFolder . --installSampleData --noDownload --dbHost="localhost" --dbUser="root" --dbPass="" --dbName="mage_local" --dbPort="3306" --no-interaction --baseUrl="http://magento.local/"')
+        local('n98-magerun.phar install --installationFolder . --installSampleData --noDownload --dbHost="localhost" --dbUser="root" --dbPass="" --dbName="mage_local" --dbPort="3306" --no-interaction --baseUrl="http://magento.local/"')
 
 @task
 def get_local_xml():
@@ -70,7 +71,7 @@ def get_media_dump():
         run('%s media:dump --strip %s' %
                 (config['magerun'], media_location))
 
-    get(remote_path=media_location, local_path='/tmp')
+        get(remote_path=media_location, local_path='/tmp')
 
     with lcd('/tmp'):
         local('unzip %s' % media_filename)
@@ -95,7 +96,7 @@ def get_database_dump():
         run('%s db:dump -f %s' %
                 (config['magerun'], db_location))
 
-    get(remote_path=db_location, local_path='/tmp')
+        get(remote_path=db_location, local_path='/tmp')
 
     with lcd(magento_root):
         local('n98-magerun.phar db:import %s' % '/tmp/' + db_filename)
@@ -107,12 +108,70 @@ def install_dependencies():
         local('composer.phar install --no-dev')
 
 @task
-def configure():
-    """Grab bag of things that need doing.
+def generate_composer_json():
+    """Install Magento with all a module's dependencies"""
+    composer_json_location = os.path.join(project_root, 'src/composer.json')
+    composer_json = json.load(open(composer_json_location))
 
-    Note that arbitrary config settings can be added in config.json,
-    under "other_config"
+    # Get only the repositories with a type.
+    repositories = [repo for repo in composer_json['repositories'] if repo.get('type') != None]
+
+    # Preformatted strings of package:version
+    require = ' '.join(['%s:%s' % req
+        for req in composer_json.get('require', dict()).items()])
+
+    require_dev = ' '.join(['%s:%s' % req
+        for req in composer_json.get('require-dev', dict()).items()])
+
+    with lcd(project_root):
+        # Make a completely emtpy composer.json
+        local('composer.phar init --no-interaction')
+
+        # Add in all repositories specified in the module
+        local('composer.phar config repositories.firegento composer http://packages.firegento.com')
+        for idx, repo in enumerate(repositories):
+            local('composer.phar config repositories.%s %s %s' %
+                    (str(idx), repo['type'], repo['url']))
+
+            # Require everything
+        local('composer.phar require --no-interaction --no-update magento-hackathon/magento-composer-installer:~2')
+        local('composer.phar require --no-interaction --no-update %s' % require)
+        local('composer.phar require --no-interaction --no-update --dev %s' % require_dev)
+
+        # Add the correct extra stuff
+        # - magento-root-dir
+        # Composer doesn't support arbitrary addition of stuff to
+        # extra. A better way might be a template composer.json,
+        # rather than `composer.phar init`.
+        extra = { 'magento-root-dir': 'htdocs/' }
+        with open(os.path.join(project_root, 'composer.json'), 'r+') as comp:
+            comp_json = json.load(comp)
+            comp_json['extra'] = extra
+            comp.truncate(0)
+            comp.seek(0)
+            comp.write(json.dumps(comp_json, indent=4, separators=(',', ': ')))
+
+@task
+def install_module():
+    """Install a module.
+
+    Look at the mappings in composer.json and apply the symlinks.
     """
+    composer_json_location = os.path.join(project_root, 'src/composer.json')
+    composer_json = json.load(open(composer_json_location))
+
+    mappings = composer_json['extra'].get('map', [])
+
+    for mapping in mappings:
+        src = os.path.join(project_root, 'src', mapping[0])
+        dest = os.path.join(magento_root, mapping[1])
+
+        local('mkdir -p %s' % os.path.dirname(dest))
+        local('ln -s %s %s' % (src, dest))
+
+@task
+def configure():
+    """Grab bag of things that need doing."""
     with lcd(magento_root):
         local('n98-magerun.phar script < %s/n98/n98-config-script.txt.local' %
                 project_root)
@@ -147,12 +206,9 @@ def init():
 @task
 def init_vanilla():
     """Install a vanilla version of magento"""
-    global project_root
-    project_root = '/var/www/magento'
-
-    global magento_root
-    magento_root = '/var/www/magento/htdocs'
-
     clean_up()
     git_clone()
     install()
+    generate_composer_json()
+    install_dependencies()
+    install_module()
