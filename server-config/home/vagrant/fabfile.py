@@ -44,7 +44,7 @@ def git_clone():
 def install():
     """Run the install command and install sample data."""
     with lcd(magento_root):
-        local('n98-magerun.phar install --installationFolder . --installSampleData --noDownload --dbHost="localhost" --dbUser="root" --dbPass="" --dbName="mage_local" --dbPort="3306" --no-interaction --baseUrl="http://magento.local/"')
+        local('n98-magerun.phar install --installationFolder . --installSampleData --noDownload --dbHost="localhost" --dbUser="root" --dbPass="" --dbName="mage_local" --dbPort="3306" --admin-password="pass1234" --no-interaction --baseUrl="%s" % config.get('base_url', 'http://magento.local/')')
 
 @task
 def get_local_xml():
@@ -114,7 +114,7 @@ def generate_composer_json():
     composer_json = json.load(open(composer_json_location))
 
     # Get only the repositories with a type.
-    repositories = [repo for repo in composer_json['repositories'] if repo.get('type') != None]
+    repositories = [repo for repo in composer_json.get('repositories', []) if repo.get('type') != None]
 
     # Preformatted strings of package:version
     require = ' '.join(['%s:%s' % req
