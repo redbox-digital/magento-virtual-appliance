@@ -1,11 +1,5 @@
 #! /bin/bash
 
-# Install devtools.
-# Among other things, this gets us an up to date version of GCC
-wget http://people.centos.org/tru/devtools-1.1/devtools-1.1.repo -O /etc/yum.repos.d/devtools-1.1.repo
-yum install -y devtoolset-1.1
-ln -s /opt/centos/devtoolset-1.1/root/usr/bin/* /usr/bin/
-
 # Add webtatic (more recent PHP)
 # We use -U to update rather than install, so that this script can be
 # run multiple times without incident.
@@ -17,7 +11,7 @@ yum update -y
 # PHP, and necessary extensions
 yum install -y php54w
 yum install -y php54w-devel php54w-mcrypt php54w-gd php54w-pear php54w-soap
-yum install -y php54w-dom php54w-pdo php54w-mysql
+yum install -y php54w-dom php54w-pdo php54w-mysql php54w-pecl-xdebug
 
 # PHP installs Apache2 as a dependency, and I don't know why.
 # Having it installed is fine, but we need to stop it.
@@ -25,6 +19,9 @@ service httpd stop
 
 # Basic PHP config
 cp /tmp/server-config/etc/php.ini /etc/
+
+# Xdebug config
+cat /tmp/server-config/etc/php.d/xdebug.ini >> /etc/php.d/xdebug.ini
 
 # PHP-FPM, and config
 yum install -y php54w-fpm
@@ -55,22 +52,9 @@ yum install -y ruby rubygems
 gem update --system
 gem install compass -v 0.12.7
 
-# Composer
-cd /usr/local/bin
-curl -sS https://getcomposer.org/installer | php
-chmod +x composer.phar
-
 # Magerun
 curl -o n98-magerun.phar https://raw.githubusercontent.com/netz98/n98-magerun/master/n98-magerun.phar
 chmod +x n98-magerun.phar
-
-# Fabric
-yum install -y python python-devel
-python /tmp/server-config/get-pip.py
-pip install fabric
-
-cp /tmp/server-config/home/vagrant/fabfile.py /home/vagrant/fabfile.py
-cp /tmp/server-config/home/vagrant/compass_compile.sh /home/vagrant/
 
 # User settings
 # cp /tmp/server-config/home/vagrant/.bashrc /home/vagrant
@@ -82,5 +66,5 @@ chown -R vagrant:vagrant /var/www/magento
 
 # Autostart the server
 # chkconfig nginx on
-# chkconfig php-fpm on
+chkconfig php-fpm on
 # chkconfig mysql on
