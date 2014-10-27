@@ -1,46 +1,29 @@
+# The Redbox Appliance
 
+A Vagrant box for developing Magento websites.
 
-Let's start with a mission statement:
+## Installation
 
-> I want for any developer, on any system, to have no technical
-> impediment to starting work within one hour.
+We are in the process of getting a better installation set up than
+this, preferably via the Vagrant Cloud. But for now,
 
-A few caveats:
+```
+git clone git@github.com:redbox-digital/magento-virtual-appliance.git
+cd magento-virtual-appliance
+vagrant up
+vagrant package --output=/tmp/rdb_appliance.box
+vagrant box add -f --name="rdb/appliance" /tmp/rbd_appliance.box
+```
 
-+ Any system means Windows, OS X, or Linux.
-+ There may be other impediments, but it will not be that project
-  setup was impossible.
+## What's Inside?
 
-We will achieve this using Vagrant. Our priority right now is not
-the benefits that come with dev-prod parity, although we should bear
-all of that in mind. The focus is simply a development environment that
-makes no assumptions of the developer.
+- PHP 5.4, with everything needed to run Magento
+- Percona 5.5
+- Nginx, configured to run one Magento site.
+- Vim, Git, and N98-Magerun (by extension, Composer)
+- Compass 0.12
+- Fabric, for automating all the things.
 
-There are many facets to consider, and many compromises that have be
-made. These are things that are requirements.
-
-+ A developer should be allowed to edit code on the host machine, with
-  their preferred editor
-+ A developer should at the very least have the ability to commit and
-  push code from the host
-+ The guest machine should have a working web server that shows the
-  current state of the project.
-
-These are things we should optimise for, in descending order of
-importance.
-
-+ Performance of shared filesystem (to a point)
-+ Number of software requirements on host
-+ Amount needed to learn
-
-The exact technical details are not important. Currently, the biggest
-foreseen problem is that Virtualbox shared folder support on Windows
-might not be good enough.
-
-If it turns out not to be good enough, we can try rsync, which has very
-good reviews on the internet. This would be unfortunate, because it
-would require running a separate command and installing an rsync
-client. From cursory examination, it appears that cygwin is the best
-one to use.
-
-
+The web root is configured to be `/var/www/magento/htdocs`, all requests
+to port 80 are forwarded there. Of course, Magento validates the
+`base_url`, so be sure to edit your hosts file to give it something.
