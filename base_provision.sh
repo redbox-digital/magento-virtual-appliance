@@ -47,6 +47,11 @@ service nginx start
 # Tools for development
 yum install -y git vim-enhanced
 
+# Install GCC, etc.
+wget http://people.centos.org/tru/devtools-1.1/devtools-1.1.repo -P /etc/yum.repos.d
+yum install -y devtoolset-1.1
+ln -s /opt/centos/devtoolset-1.1/root/usr/bin/* /usr/bin/
+
 # Compass, through rubygems
 yum install -y ruby rubygems
 gem update --system
@@ -55,6 +60,11 @@ gem install compass -v 0.12.7
 # Magerun
 curl -o n98-magerun.phar https://raw.githubusercontent.com/netz98/n98-magerun/master/n98-magerun.phar
 chmod +x n98-magerun.phar
+
+# Fabric
+yum install -y python python-devel
+python /tmp/server-config/tmp/get-pip.py
+pip install fabric
 
 # User settings
 # cp /tmp/server-config/home/vagrant/.bashrc /home/vagrant
