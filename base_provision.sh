@@ -32,7 +32,6 @@ service php-fpm start
 # It's not really better at dev load, but it's what we run on production
 rpm -Uvh http://www.percona.com/redir/downloads/percona-release/percona-release-0.0-1.x86_64.rpm
 yum install -y Percona-Server-server-55
-# cp /tmp/server-config/etc/my.cnf /etc/
 mysql_install_db
 service mysql start
 
