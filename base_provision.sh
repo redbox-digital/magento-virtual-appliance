@@ -60,7 +60,7 @@ gem install compass -v 0.12.7
 curl -o n98-magerun.phar https://raw.githubusercontent.com/netz98/n98-magerun/master/n98-magerun.phar
 chmod +x n98-magerun.phar
 mv n98-magerun.phar /usr/local/bin/n98-magerun.phar
-ln -s /usr/local/bin/n98-magerun.phar /usr/local/n98-magerun
+ln -s /usr/local/bin/n98-magerun.phar /usr/local/bin/n98-magerun
 
 # Composer
 curl -sS https://getcomposer.org/installer | php
