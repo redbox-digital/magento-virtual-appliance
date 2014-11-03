@@ -11,8 +11,8 @@ this, preferably via the Vagrant Cloud. But for now,
 git clone git@github.com:redbox-digital/magento-virtual-appliance.git
 cd magento-virtual-appliance
 vagrant up
-vagrant package --output=/tmp/rdb_appliance.box
-vagrant box add -f --name="rdb/appliance" /tmp/rbd_appliance.box
+vagrant package --output=/tmp/rbd_appliance.box
+vagrant box add -f --name="rbd/appliance" /tmp/rbd_appliance.box
 ```
 
 ## What's Inside?
