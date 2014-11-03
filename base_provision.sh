@@ -70,11 +70,16 @@ curl -sS https://getcomposer.org/installer | php
 chmod +x composer.phar
 mv composer.phar /usr/local/bin
 ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
+cp -r /tmp/server-config/home/vagrant/.composer /home/vagrant/
+chown -R vagrant:vagrant /home/vagrant/.composer
 
 # Fabric
 yum install -y python python-devel
 python /tmp/server-config/tmp/get-pip.py
 pip install fabric
+
+# Magento-Fabric
+su -c "/usr/local/bin/composer.phar global install" vagrant
 
 # User settings
 # cp /tmp/server-config/home/vagrant/.bashrc /home/vagrant

@@ -1,0 +1,11 @@
+{
+    "repositories": {
+        "magento-fabric": {
+            "type": "vcs",
+            "url": "git@github.com:redbox-digital/magento-fabric.git"
+        }
+    },
+    "require": {
+        "rbd/magento-fabric": "dev-master@dev"
+    }
+}
