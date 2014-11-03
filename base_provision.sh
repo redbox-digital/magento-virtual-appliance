@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
 # Add webtatic (more recent PHP)
 # We use -U to update rather than install, so that this script can be
