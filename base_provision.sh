@@ -63,6 +63,12 @@ chmod +x n98-magerun.phar
 mv n98-magerun.phar /usr/local/bin/n98-magerun.phar
 ln -s /usr/local/bin/n98-magerun.phar /usr/local/n98-magerun
 
+# Composer
+curl -sS https://getcomposer.org/installer | php
+chmod +x composer.phar
+mv composer.phar /usr/local/bin
+ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
+
 # Fabric
 yum install -y python python-devel
 python /tmp/server-config/tmp/get-pip.py
