@@ -5,3 +5,6 @@ fi
 
 # Add global composer binaries to runtime path
 export PATH="~/.composer/vendor/bin:$PATH"
+
+# Aliases
+alias mfab="mage-fab.sh"
