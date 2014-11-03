@@ -1,5 +1,8 @@
 #! /usr/bin/env bash
 
+# Add .bashrc for vagrant
+cp /tmp/server-config/home/vagrant/.bashrc /home/vagrant/
+
 # Add webtatic (more recent PHP)
 # We use -U to update rather than install, so that this script can be
 # run multiple times without incident.
