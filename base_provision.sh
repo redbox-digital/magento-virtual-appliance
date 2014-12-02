@@ -9,7 +9,7 @@ cp /tmp/server-config/home/vagrant/.bashrc /home/vagrant/
 # Add webtatic (more recent PHP)
 # We use -U to update rather than install, so that this script can be
 # run multiple times without incident.
-rpm -Uvh http://mirror.webtatic.com/yum/el6/latest.rpm
+rpm -U http://mirror.webtatic.com/yum/el6/latest.rpm
 
 # Ensure everything is up to date
 yum update -y
@@ -36,14 +36,14 @@ service php-fpm start
 
 # Installing percona, because it's better than MySQL
 # It's not really better at dev load, but it's what we run on production
-rpm -Uvh http://www.percona.com/redir/downloads/percona-release/percona-release-0.0-1.x86_64.rpm
+rpm -U http://www.percona.com/redir/downloads/percona-release/percona-release-0.0-1.x86_64.rpm
 yum install -y Percona-Server-server-55
 mysql_install_db
 service mysql start
 
 # Install Nginx.
 # We add the Nginx yum repository, because the default version is 1.0.1
-rpm -Uvh http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
+rpm -U http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
 yum install -y nginx
 rm -rf /etc/nginx/conf.d
 cp -r /tmp/server-config/etc/nginx/ /etc/
