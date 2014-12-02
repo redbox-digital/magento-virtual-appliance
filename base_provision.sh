@@ -1,5 +1,8 @@
 #! /usr/bin/env bash
 
+# Update everything
+sudo yum -y update
+
 # Add .bashrc for vagrant
 cp /tmp/server-config/home/vagrant/.bashrc /home/vagrant/
 
