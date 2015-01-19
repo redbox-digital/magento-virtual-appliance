@@ -15,13 +15,9 @@ rpm -U http://mirror.webtatic.com/yum/el6/latest.rpm
 yum update -y
 
 # PHP, and necessary extensions
-yum install -y php54w
+yum install -y php54w-cli
 yum install -y php54w-devel php54w-mcrypt php54w-gd php54w-pear php54w-soap
 yum install -y php54w-dom php54w-pdo php54w-mysql php54w-pecl-xdebug
-
-# PHP installs Apache2 as a dependency, and I don't know why.
-# Having it installed is fine, but we need to stop it.
-service httpd stop
 
 # Basic PHP config
 cp /tmp/server-config/etc/php.ini /etc/
