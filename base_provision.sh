@@ -55,7 +55,8 @@ gem update --system
 gem install compass -v 0.12.7
 
 # Magerun
-curl -o n98-magerun.phar https://raw.githubusercontent.com/netz98/n98-magerun/master/n98-magerun.phar
+curl -o n98-magerun.phar \
+  https://raw.githubusercontent.com/netz98/n98-magerun/master/n98-magerun.phar
 chmod +x n98-magerun.phar
 mv n98-magerun.phar /usr/local/bin/n98-magerun.phar
 
