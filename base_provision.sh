@@ -26,6 +26,9 @@ yum install -y php54w-fpm
 cp -r /tmp/server-config/etc/php-fpm.conf /etc/
 service php-fpm start
 
+# Tell PHP-FPM to start on system start
+chkconfig php-fpm on
+
 # Installing percona, because it's better than MySQL
 # It's not really better at dev load, but it's what we run on production
 rpm -U http://www.percona.com/redir/downloads/percona-release/percona-release-0.0-1.x86_64.rpm
@@ -88,7 +91,3 @@ chown vagrant:vagrant /home/vagrant/.ssh/known_hosts
 mkdir -p /var/www/magento
 chown -R vagrant:vagrant /var/www/magento
 
-# Autostart the server
-# chkconfig nginx on
-chkconfig php-fpm on
-# chkconfig mysql on
