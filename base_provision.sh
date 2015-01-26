@@ -1,7 +1,6 @@
 #! /usr/bin/env bash
 
-# Update everything
-sudo yum -y update
+yum -y update
 
 # Add .bashrc for vagrant
 cp /tmp/server-config/home/vagrant/.bashrc /home/vagrant/
@@ -10,9 +9,6 @@ cp /tmp/server-config/home/vagrant/.bashrc /home/vagrant/
 # We use -U to update rather than install, so that this script can be
 # run multiple times without incident.
 rpm -U http://mirror.webtatic.com/yum/el6/latest.rpm
-
-# Ensure everything is up to date
-yum update -y
 
 # PHP, and necessary extensions
 yum install -y php54w-cli
