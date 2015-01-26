@@ -55,7 +55,7 @@ ln -s /opt/centos/devtoolset-1.1/root/usr/bin/* /usr/bin/
 # Compass, through rubygems
 yum install -y ruby rubygems
 gem update --system
-gem install compass -v 0.12.7
+gem install compass
 
 # Magerun
 curl -o n98-magerun.phar \
