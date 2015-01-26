@@ -84,8 +84,8 @@ pip install fabric
 su -c "/usr/local/bin/composer.phar global install" vagrant
 
 # User settings
-# cp /tmp/server-config/home/vagrant/.bashrc /home/vagrant
-cat /tmp/server-config/home/vagrant/.ssh/known_hosts >> /home/vagrant/.ssh/known_hosts
+cat /tmp/server-config/home/vagrant/.ssh/known_hosts >> \
+  /home/vagrant/.ssh/known_hosts
 chown vagrant:vagrant /home/vagrant/.ssh/known_hosts
 
 mkdir -p /var/www/magento
