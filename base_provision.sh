@@ -60,6 +60,11 @@ curl -o n98-magerun.phar \
 chmod +x n98-magerun.phar
 mv n98-magerun.phar /usr/local/bin/n98-magerun.phar
 
+# Magerun modules
+mkdir -p /usr/local/share/n98-magerun/modules/
+git clone https://github.com/AOEPeople/mpmd.git \
+  /usr/local/share/n98-magerun/modules/mpmd
+
 # Composer
 curl -sS https://getcomposer.org/installer | php
 chmod +x composer.phar
