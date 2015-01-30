@@ -5,6 +5,14 @@ yum -y update
 # Add .bashrc for vagrant
 cp /tmp/server-config/home/vagrant/.bashrc /home/vagrant/
 
+# Install EPEL
+# Currently we use this for installing pv, which displays progress bars
+# on database imports.
+yum install -y epel-release
+
+# Install pv
+yum install -y pv
+
 # Add webtatic (more recent PHP)
 # We use -U to update rather than install, so that this script can be
 # run multiple times without incident.
@@ -53,7 +61,7 @@ yum install -y devtoolset-1.1
 ln -s /opt/centos/devtoolset-1.1/root/usr/bin/* /usr/bin/
 
 # Compass, through rubygems
-yum install -y ruby rubygems
+yum install -y ruby ruby-devel rubygems
 gem update --system
 gem install compass
 
