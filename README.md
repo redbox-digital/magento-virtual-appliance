@@ -18,7 +18,8 @@ vagrant up
 - Percona 5.5;
 - Nginx, configured to run one Magento site;
 - Vim, Git, Composer, N98-Magerun;
-- The Magento Project Mess Detector
+- The Magento Project Mess Detector;
+- NodeJS, NPM, Uglify, Bower and Grunt-CLI;
 - Compass;
 - Fabric, for automating all the things.
 
