@@ -13,6 +13,13 @@ yum install -y epel-release
 # Install pv
 yum install -y pv
 
+# Install node
+yum install -y npm
+
+# Node based tools
+npm install -g inherits
+npm install -g uglify-js bower grunt-cli
+
 # Add webtatic (more recent PHP)
 # We use -U to update rather than install, so that this script can be
 # run multiple times without incident.
