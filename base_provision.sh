@@ -13,6 +13,9 @@ yum install -y epel-release
 # Install pv
 yum install -y pv
 
+# Install tree
+yum install -y tree
+
 # Install node
 yum install -y npm
 
