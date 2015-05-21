@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Upgrade to Percona 5.6
 - Upgrade to PHP 5.5
 - Add Gulp
 - Add tmux
