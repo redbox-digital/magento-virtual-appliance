@@ -2,6 +2,8 @@
 
 ## Unreleased
 
-- Added tmux
-- Added the tree utility
-- Added a change log
+- Add Gulp
+- Add tmux
+- Add the tree utility
+- Add a change log
+

@@ -24,7 +24,7 @@ yum install -y tmux
 
 # Node based tools
 npm install -g inherits
-npm install -g uglify-js bower grunt-cli
+npm install -g uglify-js bower grunt-cli gulp
 
 # Add webtatic (more recent PHP)
 # We use -U to update rather than install, so that this script can be
