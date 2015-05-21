@@ -32,9 +32,9 @@ npm install -g uglify-js bower grunt-cli gulp
 rpm -U http://mirror.webtatic.com/yum/el6/latest.rpm
 
 # PHP, and necessary extensions
-yum install -y php54w-cli
-yum install -y php54w-devel php54w-mcrypt php54w-gd php54w-pear php54w-soap
-yum install -y php54w-dom php54w-pdo php54w-mysql php54w-pecl-xdebug
+yum install -y php55w-cli
+yum install -y php55w-devel php55w-mcrypt php55w-gd php55w-pear php55w-soap
+yum install -y php55w-dom php55w-pdo php55w-mysqlnd php55w-pecl-xdebug
 
 # Basic PHP config
 cp /tmp/server-config/etc/php.ini /etc/
@@ -43,7 +43,7 @@ cp /tmp/server-config/etc/php.ini /etc/
 cat /tmp/server-config/etc/php.d/xdebug.ini >> /etc/php.d/xdebug.ini
 
 # PHP-FPM, and config
-yum install -y php54w-fpm
+yum install -y php55w-fpm
 cp -r /tmp/server-config/etc/php-fpm.conf /etc/
 service php-fpm start
 
