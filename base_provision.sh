@@ -19,6 +19,9 @@ yum install -y tree
 # Install node
 yum install -y npm
 
+# Install tmux
+yum install -y tmux
+
 # Node based tools
 npm install -g inherits
 npm install -g uglify-js bower grunt-cli
