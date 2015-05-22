@@ -20,7 +20,7 @@ prompt_user_name () {
 prompt_email () {
   read -p"Email address e.g. \"jane.doe@acmecorp.org\": " email
 
-  if echo $email | grep "@"
+  if echo $email | grep "@" > /dev/null
   then
     git config --global user.email "$email"
   else
