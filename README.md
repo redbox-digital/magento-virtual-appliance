@@ -14,12 +14,12 @@ vagrant up
 ## What's Inside?
 
 - CentOS 6.
-- PHP 5.4, with everything needed to run Magento;
-- Percona 5.5;
+- PHP 5.5, with everything needed to run Magento;
+- Percona 5.6;
 - Nginx, configured to run one Magento site;
-- Vim, Git, Composer, N98-Magerun;
+- Vim, Git, Composer, N98-Magerun, Tmux and Jq;
 - The Magento Project Mess Detector;
-- NodeJS, NPM, Uglify, Bower and Grunt-CLI;
+- NodeJS, NPM, Uglify, Bower, Grunt-CLI and Gulp;
 - Compass;
 - Fabric, for automating all the things.
 
