@@ -16,6 +16,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     source: "server-config",
     destination: "/tmp/server-config"
 
+  config.vm.provider "virtualbox" do |v|
+      v.memory = 1024
+  end
+
   # Base provisioning, things like installing servers and runtimes.
   config.vm.provision "shell",
     path: "base_provision.sh"
