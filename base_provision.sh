@@ -55,6 +55,7 @@ chkconfig php-fpm on
 rpm -U http://www.percona.com/redir/downloads/percona-release/percona-release-0.0-1.x86_64.rpm
 yum install -y Percona-Server-server-56
 mysql_install_db
+cp /tmp/server-config/etc/my.cnf /etc/
 service mysql start
 
 # Install Nginx.
