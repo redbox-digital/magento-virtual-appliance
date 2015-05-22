@@ -22,6 +22,9 @@ yum install -y npm
 # Install tmux
 yum install -y tmux
 
+# Install jq
+yum install -y jq
+
 # Node based tools
 npm install -g inherits
 npm install -g uglify-js bower grunt-cli gulp
