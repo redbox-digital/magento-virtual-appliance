@@ -1,0 +1,58 @@
+#! /usr/bin/env bash
+
+echo_message () {
+  echo "Before you commit, please be a good citizen and supply a"
+  echo "name and email address. This way, people can git blame you"
+  echo "for all the mistakes you make."
+}
+
+prompt_user_name () {
+  read -p"Full Name e.g. \"Jane Doe\": " username
+
+  if [[ -n "$username" ]]
+  then
+    git config --global user.name "$username"
+  else
+    echo "Please just enter your name."
+  fi
+}
+
+prompt_email () {
+  read -p"Email address e.g. \"jane.doe@acmecorp.org\": " email
+
+  if echo $email | grep "@"
+  then
+    git config --global user.email "$email"
+  else
+    echo "Invalid email address."
+  fi
+}
+
+git_config_is_empty () {
+  local token="$1"
+  if [[ $(git config user.$token) ]]
+  then
+    return 1
+  else
+    return 0
+  fi
+}
+
+main () {
+  if git_config_is_empty name || git_config_is_empty email
+  then
+    echo_message
+
+    while git_config_is_empty name
+    do
+      prompt_user_name
+    done
+
+    while git_config_is_empty email
+    do
+      prompt_email
+    done
+  fi
+}
+
+main
